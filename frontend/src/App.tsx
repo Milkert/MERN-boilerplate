@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import './App.css'
+import { api } from './config/api'
 
 function App() {
   const [apiMessage, setApiMessage] = useState('')
@@ -8,8 +9,7 @@ function App() {
   const testConnection = async () => {
     setLoading(true)
     try {
-      const response = await fetch('http://localhost:3001/api/test')
-      const data = await response.json()
+      const data = await api.get('/test')
       setApiMessage(data.message)
     } catch (error) {
       setApiMessage('Error connecting to backend')
