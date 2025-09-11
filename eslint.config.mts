@@ -41,10 +41,8 @@ export default defineConfig([
         },
       ],
       "brace-style": ["error", "1tbs"], // one true brace style
-      "@typescript-eslint/explicit-function-return-type": "error", // require return types on functions
       "react/jsx-curly-brace-presence": ["error", "never"], // disallow unnecessary curly braces in JSX
       "react/self-closing-comp": ["error", { component: true, html: false }], // self-close components without children
-      "react/jsx-no-useless-fragments": "error", // disallow unnecessary fragments
       "@typescript-eslint/consistent-type-definitions": ["error", "type"], // use 'type' for type definitions
       "@typescript-eslint/no-use-before-define": [
         "error",
