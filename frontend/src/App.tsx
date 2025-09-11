@@ -1,22 +1,21 @@
-import { useState } from 'react'
-import './App.css'
-import { api } from './config/api'
+import React, { useState } from 'react';
 
 function App() {
-  const [apiMessage, setApiMessage] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [apiMessage, setApiMessage] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
 
   const testConnection = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
-      const data = await api.get('/test')
-      setApiMessage(data.message)
+      const res = await fetch('http://localhost:3001/api/test');
+      const data: { message: string } = await res.json();
+      setApiMessage(data.message);
     } catch (error) {
-      setApiMessage('Error connecting to backend')
-      console.error('API Error:', error)
+      setApiMessage('Error connecting to backend');
+      console.error('API Error:', error);
     }
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   return (
     <>
@@ -26,7 +25,7 @@ function App() {
       </button>
       {apiMessage && <p>Backend says: {apiMessage}</p>}
     </>
-  )
+  );
 }
 
-export default App
+export default App;
