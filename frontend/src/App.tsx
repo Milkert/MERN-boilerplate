@@ -12,7 +12,7 @@ function App() {
       setApiMessage(data.message);
     } catch (error) {
       setApiMessage("Error connecting to backend");
-      console.error("API Error:", error);
+      console.error('API Error:', error);
     }
     setLoading(false);
   };
