@@ -21,7 +21,7 @@ function App() {
     <>
       <h1>MERN Boilerplate</h1>
       <button onClick={testConnection} disabled={loading}>
-        {loading ? "Testing..." : "Test Backend Connection"}
+        {loading ? "Testing.." : "Test Backend Connection"}
       </button>
       {apiMessage && <p>Backend says: {apiMessage}</p>}
     </>
