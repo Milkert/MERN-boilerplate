@@ -12,7 +12,7 @@ function App() {
       setApiMessage(data.message);
     } catch (error) {
       setApiMessage("Error connecting to backend");
-      console.error('API Error:', error);
+      console.error("API Error:", error);
     }
     setLoading(false);
   };
@@ -20,8 +20,8 @@ function App() {
   return (
     <>
       <h1>MERN Boilerplate</h1>
-      <button onClick={testConnection} disabled={loading}>
-        {loading ? "Testing.." : "Test Backend Connection"}
+      <button className="bg-red-500" onClick={testConnection} disabled={loading}>
+        {loading ? "Testing.g." : "Test Backend Connection"}
       </button>
       {apiMessage && <p>Backend says: {apiMessage}</p>}
     </>
