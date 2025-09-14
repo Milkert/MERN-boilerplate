@@ -20,6 +20,9 @@ export default defineConfig([
         version: "19.1",
       },
     },
+    rules: {
+      "react/react-in-jsx-scope": "off", // Not needed with new JSX transform
+    },
   },
   {
     rules: {
