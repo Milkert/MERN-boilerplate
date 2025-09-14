@@ -47,10 +47,7 @@ export default defineConfig([
       "react/jsx-curly-brace-presence": ["error", "never"], // disallow unnecessary curly braces in JSX
       "react/self-closing-comp": ["error", { component: true, html: false }], // self-close components without children
       "@typescript-eslint/consistent-type-definitions": ["error", "type"], // use 'type' for type definitions
-      "@typescript-eslint/no-use-before-define": [
-        "error",
-        { functions: false, classes: true, variables: true },
-      ], // allow function use before define
+      "@typescript-eslint/no-use-before-define": ["error", { functions: false, classes: true, variables: true }], // allow function use before define
       "@typescript-eslint/no-explicit-any": "error", // warn on use of 'any' type
       "react/jsx-key": ["error", { checkFragmentShorthand: true }], // enforce keys in lists and fragments
     },
