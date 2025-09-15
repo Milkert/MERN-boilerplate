@@ -25,12 +25,14 @@ if (!mongoUri) {
   throw new Error("MONGO_URI is not defined in environment variables");
 }
 
-// Only start the server if this file is run directly (not imported)
 mongoose
   .connect(mongoUri)
-  .then(() => {
-    console.log("Connected to MongoDB");
-  })
+  .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
+const server = app.listen(PORT, () => {
+  console.log("Server listening on port http://localhost:" + PORT);
+});
+
 export default app;
+export { server }; // for testing

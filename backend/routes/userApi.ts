@@ -7,7 +7,7 @@ const router = Router();
 
 router.post("/login", async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email: email.toLowerCase() });
   if (!user) {
     return res.status(401).json({ message: "Email not found" });
   }
@@ -20,13 +20,17 @@ router.post("/login", async (req: Request, res: Response) => {
 router.post("/signup", async (req: Request, res: Response) => {
   const { email, password, name } = req.body;
 
-  const existingUser = await User.findOne({ email });
+  const existingUser = await User.findOne({ email: email.toLowerCase() });
 
   if (existingUser) {
     return res.status(400).json({ message: "Email already exists" });
   }
 
-  const user = await User.create({ email, password: await bcrypt.hash(password, 10), name: name[0].toUpperCase() + name.slice(1).toLowerCase() });
+  const user = await User.create({
+    email: email.toLowerCase(),
+    password: await bcrypt.hash(password, 10),
+    name: name[0].toUpperCase() + name.slice(1).toLowerCase(),
+  });
   if (!user) {
     return res.status(401).json({ message: "Registration failed" });
   }
