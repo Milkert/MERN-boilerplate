@@ -63,8 +63,9 @@ function Login() {
           >
             Login
           </button>
-          <Link to="/signup" className="text-bold text-blue-600 hover:text-blue-700">Register</Link>
-
+          <Link to="/signup" className="text-bold text-blue-600 hover:text-blue-700">
+            Register
+          </Link>
         </form>
       </div>
     </>
