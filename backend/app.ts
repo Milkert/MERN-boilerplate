@@ -9,7 +9,11 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true,
+}));
+
 app.use(express.json());
 
 app.use("/api", userApi);
@@ -19,12 +23,11 @@ if (!mongoUri) {
   throw new Error("MONGO_URI is not defined in environment variables");
 }
 
-// After the check, mongoUri is guaranteed to be a string
 mongoose
   .connect(mongoUri)
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
 app.listen(PORT, () => {
-  console.log("Server listening on port http://localhost:${PORT}");
+  console.log("Server listening on port http://localhost:" + PORT);
 });

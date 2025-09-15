@@ -3,19 +3,20 @@ import { useMutation } from "@tanstack/react-query";
 import api from "../config/api";
 import { Link } from "react-router-dom";
 
-function Login() {
+function Signup() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [name, setName] = useState<string>("");
 
   const mutation = useMutation({
-    mutationFn: async (loginData: { email: string; password: string }) => {
-      return api.post("/login", loginData);
+    mutationFn: async (loginData: { email: string; password: string; name: string }) => {
+      return api.post("/signup", loginData);
     },
     onSuccess: (data) => {
-      console.log("Login successful:", data);
+      console.log("Signup successful:", data);
     },
     onError: (error) => {
-      console.error("Login failed:", error);
+      console.error("Signup failed:", error);
     },
   });
 
@@ -24,6 +25,7 @@ function Login() {
     mutation.mutate({
       email,
       password,
+      name,
     });
   };
 
@@ -31,6 +33,19 @@ function Login() {
     <>
       <div className="mt-40 w-full flex items-center justify-center">
         <form onSubmit={handleSubmit} className="w-full max-w-md">
+        <div className="mb-4">
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+              Surname
+            </label>
+            <input
+              type="text"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Enter your surname"
+            />
+          </div>
           <div className="mb-4">
             <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
               Email
@@ -61,14 +76,14 @@ function Login() {
             type="submit"
             className="mb-10 w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
-            Login
+            Register
           </button>
-          <Link to="/signup" className="text-bold text-blue-600 hover:text-blue-700">Register</Link>
+          <Link to="/login" className="text-bold text-blue-600 hover:text-blue-700">Login</Link>
 
         </form>
       </div>
     </>
   );
 }
-
-export default Login;
+  
+export default Signup;
