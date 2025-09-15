@@ -7,14 +7,18 @@ const router = Router();
 
 router.post("/login", async (req: Request, res: Response) => {
   const { email, password } = req.body;
+
+  // find user by email
   const user = await User.findOne({ email: email.toLowerCase() });
+
+  // check if user exists and password is correct
   if (!user) {
     return res.status(401).json({ message: "Email not found" });
   }
   if (!(await bcrypt.compare(password, user.password))) {
     return res.status(401).json({ message: "Incorrect password" });
   }
-  res.json({ message: "Login successful" });
+  res.status(200).json({ message: "Login successful" });
 });
 
 router.post("/signup", async (req: Request, res: Response) => {
@@ -22,10 +26,12 @@ router.post("/signup", async (req: Request, res: Response) => {
 
   const existingUser = await User.findOne({ email: email.toLowerCase() });
 
+  // check if email already exists
   if (existingUser) {
     return res.status(400).json({ message: "Email already exists" });
   }
 
+  // create new user
   const user = await User.create({
     email: email.toLowerCase(),
     password: await bcrypt.hash(password, 10),
