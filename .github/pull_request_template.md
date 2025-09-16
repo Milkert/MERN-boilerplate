@@ -3,14 +3,14 @@
 - [ ] Code passes Github workflow
 - [ ] Code runs npm run test succesfully on the backend (test manually)
 
-# Changes
+## Changes
 
 Write your changes here..
 
-# Running
+## Running
 
 Delete this if needed
 
-# Logs
+### Logs
 
 Delete this if needed
