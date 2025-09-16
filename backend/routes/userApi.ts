@@ -21,7 +21,6 @@ router.post("/login", async (req: Request, res: Response) => {
   if (!(await bcrypt.compare(password, user.password))) {
     return res.status(401).json({ message: "Incorrect password" });
   }
-  res.json({ message: "Login successful" });
 
   const token = jwt.sign({ id: email }, process.env.JWT_SECRET!, { expiresIn: "1d" });
 
@@ -31,6 +30,7 @@ router.post("/login", async (req: Request, res: Response) => {
     sameSite: "strict",
     maxAge: 24 * 60 * 60 * 1000, // 1 day
   });
+  res.status(200).json({ message: "Login successful" });
 });
 
 router.post("/signup", async (req: Request, res: Response) => {
