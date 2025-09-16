@@ -5,7 +5,8 @@
   "main": "app.ts",
   "scripts": {
     "start": "tsx app.ts",
-    "dev": "nodemon --exec \"tsx app.ts\""
+    "dev": "nodemon --exec \"tsx app.ts\"",
+    "test": "jest"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
