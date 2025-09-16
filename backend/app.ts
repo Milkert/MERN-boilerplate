@@ -30,6 +30,9 @@ mongoose
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log("Server listening on port http://localhost:" + PORT);
 });
+
+export default app;
+export { server }; // for testing
