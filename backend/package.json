@@ -5,10 +5,7 @@
   "main": "app.ts",
   "scripts": {
     "start": "tsx app.ts",
-    "dev": "nodemon --exec \"tsx app.ts\"",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "dev": "nodemon --exec \"tsx app.ts\""
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
@@ -18,7 +15,6 @@
     "mongoose": "^8.18.0"
   },
   "devDependencies": {
-    "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/jest": "^30.0.0",
