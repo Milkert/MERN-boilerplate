@@ -21,7 +21,7 @@ export default defineConfig([
     ...pluginReact.configs.flat.recommended,
     settings: {
       react: {
-        version: "19.1",
+        version: "detect",
       },
     },
     rules: {
@@ -33,8 +33,8 @@ export default defineConfig([
       import: pluginImport,
     },
     rules: {
-      // --- Your existing rules (priority) ---
       semi: ["error", "always"], // Require semicolons
+      "no-console": "warn",
       quotes: ["error", "double"], // Use double quotes
       "object-curly-spacing": ["error", "always"], // Space inside object braces
       "array-bracket-spacing": ["error", "never"], // No spaces inside array brackets
@@ -48,6 +48,26 @@ export default defineConfig([
         "error",
         { properties: "never", ignoreDestructuring: true }, // Enforce camelCase, ignore destructuring and object properties
       ],
+      "@typescript-eslint/naming-convention": [
+        "error",
+        {
+          "selector": "variable",
+          "format": ["camelCase", "UPPER_CASE", "PascalCase"],
+          "leadingUnderscore": "allow",
+        },
+        {
+          "selector": "function",
+          "format": ["camelCase", "PascalCase"],
+        },
+        {
+          "selector": "typeLike",
+          "format": ["PascalCase"],
+        },
+        {
+          "selector": "enumMember",
+          "format": ["UPPER_CASE"],
+        },
+      ],
       "brace-style": ["error", "1tbs"], // One True Brace Style
       "react/jsx-curly-brace-presence": ["error", "never"], // No unnecessary JSX curly braces
       "react/self-closing-comp": ["error", { component: true, html: false }], // Self-close components without children
@@ -58,13 +78,21 @@ export default defineConfig([
       ],
       "@typescript-eslint/no-explicit-any": "error", // Disallow use of 'any' type
       "react/jsx-key": ["error", { checkFragmentShorthand: true }], // Require keys in lists and fragments
+      // Unused Variable Detection
+      "no-unused-vars": "off", // turn off base rule
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          "argsIgnorePattern": "^_", // ignore args starting with _
+          "varsIgnorePattern": "^_", // ignore vars starting with _
+          "ignoreRestSiblings": true, // ignore rest siblings in destructuring
+        },
+      ],
 
-      // --- Airbnb rules merged (TS-safe) ---
       "arrow-spacing": ["error", { before: true, after: true }], // Space before/after arrow function arrows
       "block-spacing": ["error", "always"], // Space inside single-line blocks
       "computed-property-spacing": ["error", "never"], // No spaces in computed properties
       "func-call-spacing": ["error", "never"], // No space between function name and parentheses
-      "space-before-function-paren": ["error", "never"], // No space before function parentheses
       "space-infix-ops": "error", // Require spaces around infix operators
       "no-trailing-spaces": "error", // No trailing spaces at the end of lines
       "no-whitespace-before-property": "error", // No spaces before property access
@@ -72,13 +100,10 @@ export default defineConfig([
         "error",
         { blankLine: "always", prev: "*", next: "return" }, // Blank line before return statements
       ],
-
-      // --- React-specific Airbnb rules ---
       "react/jsx-props-no-multi-spaces": "error", // Disallow multiple spaces between JSX props
       "react/jsx-indent": ["error", 2], // Indent JSX with 2 spaces
       "react/jsx-indent-props": ["error", 2], // Indent JSX props with 2 spaces
       "react/jsx-filename-extension": ["error", { extensions: [".jsx", ".tsx"] }], // Only allow JSX in .jsx/.tsx files
-      "react/jsx-max-props-per-line": ["error", { maximum: 1 }], // Max one prop per line in JSX
       "react/jsx-wrap-multilines": [
         "error",
         {
@@ -106,15 +131,7 @@ export default defineConfig([
       "no-duplicate-imports": "error", // Disallow duplicate imports
 
       // --- Import/order rules ---
-      "import/no-extraneous-dependencies": ["error", { devDependencies: false }], // Disallow imports not listed in package.json
-      "import/order": [
-        "error",
-        {
-          groups: [["builtin", "external", "internal"]],
-          "newlines-between": "always", // Enforce import order and spacing
-        },
-      ],
-
+      "import/no-extraneous-dependencies": ["off"], // allow devDependencies
       // --- Other Airbnb rules ---
       "no-underscore-dangle": "error", // Disallow dangling underscores in identifiers
       "no-alert": "error", // Disallow alert/confirm/prompt

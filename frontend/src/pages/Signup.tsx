@@ -33,7 +33,7 @@ function Signup() {
     <>
       <div className="mt-40 w-full flex items-center justify-center">
         <form onSubmit={handleSubmit} className="w-full max-w-md">
-        <div className="mb-4">
+          <div className="mb-4">
             <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
               Surname
             </label>
@@ -85,5 +85,5 @@ function Signup() {
     </>
   );
 }
-  
+
 export default Signup;
