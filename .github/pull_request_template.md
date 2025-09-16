@@ -2,6 +2,7 @@
 
 - [ ] Code passes Github workflow
 - [ ] Code runs npm run test succesfully on the backend (test manually)
+- [ ] No merge conflicts
 
 ## Changes
 
