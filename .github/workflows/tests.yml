@@ -30,6 +30,6 @@ jobs:
           cd backend
           npm test
         env:
-          MONGO_URI: ${{ secrets.MONGO_URI }}
+          MONGO_URI: mongodb://localhost:27017/test-db
           PORT: 3001
           
