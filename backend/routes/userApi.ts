@@ -1,7 +1,6 @@
-import { Router } from "express";
-import type { Request, Response } from "express";
-import User from "../models/userModel.js";
+import { Router, type Request, type Response } from "express";
 import bcrypt from "bcrypt";
+import User from "../models/userModel.js";
 
 const router = Router();
 
