@@ -2,7 +2,7 @@ import { Router } from "express";
 import type { Request, Response } from "express";
 import User from "../models/userModel.js";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import jwt, { type JwtPayload } from "jsonwebtoken";
 
 import "dotenv/config";
 
@@ -57,6 +57,18 @@ router.post("/signup", async (req: Request, res: Response) => {
     return res.status(401).json({ message: "Registration failed" });
   }
   res.status(201).json({ message: "Registration successful" });
+});
+
+router.get("api/cjecj-auth", (req, res) => {
+  const token = req.cookies.token;
+  if (!token) return res.status(401).send("Unauthorized");
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
+    res.status(200).json({ email: decoded.id });
+  } catch {
+    res.status(401).send("Invalid token");
+  }
 });
 
 export default router;
