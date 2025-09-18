@@ -4,8 +4,6 @@ import User from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import jwt, { type JwtPayload } from "jsonwebtoken";
 
-import "dotenv/config";
-
 const router = Router();
 
 router.post("/login", async (req: Request, res: Response) => {
@@ -60,7 +58,6 @@ router.post("/signup", async (req: Request, res: Response) => {
 
 router.get("/check-auth", (req, res) => {
   const token = req.cookies.token;
-  console.log("HELLO");
   if (!token) return res.status(401).send("Unauthorized");
 
   try {
