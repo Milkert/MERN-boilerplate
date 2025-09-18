@@ -27,7 +27,6 @@ router.post("/login", async (req: Request, res: Response) => {
   res.cookie("token", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "development",
-    sameSite: "strict",
     maxAge: 24 * 60 * 60 * 1000, // 1 day
   });
   res.status(200).json({ message: "Login successful" });
@@ -59,8 +58,9 @@ router.post("/signup", async (req: Request, res: Response) => {
   res.status(201).json({ message: "Registration successful" });
 });
 
-router.get("api/cjecj-auth", (req, res) => {
+router.get("/check-auth", (req, res) => {
   const token = req.cookies.token;
+  console.log("HELLO");
   if (!token) return res.status(401).send("Unauthorized");
 
   try {
