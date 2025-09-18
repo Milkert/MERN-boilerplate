@@ -1,7 +1,6 @@
 import { Router, type Request, type Response } from "express";
 import bcrypt from "bcrypt";
 import User from "../models/userModel.js";
-import bcrypt from "bcrypt";
 import jwt, { type JwtPayload } from "jsonwebtoken";
 
 const router = Router();
