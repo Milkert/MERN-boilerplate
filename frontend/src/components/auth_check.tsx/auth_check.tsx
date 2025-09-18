@@ -2,6 +2,7 @@ import api from "../../config/api";
 import { Navigate } from "react-router-dom";
 
 import { useQuery } from "@tanstack/react-query";
+import type { JSX } from "react";
 
 function ProtectedRoute({ children }: { children: JSX.Element }) {
   // const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
