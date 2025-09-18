@@ -10,14 +10,19 @@ function ProtectedRoute({ children }: { children: JSX.Element }) {
       try {
         const res = await axios.get("/api/check-auth", { withCredentials: true });
         setIsAuthenticated(true);
+        console.log(isAuthenticated);
       } catch (err) {
-        setIsAuthenticated(false);
+        console.log("ERROR");
       }
     };
     checkAuth();
   }, []);
-
+  if (isAuthenticated === null) {
+    // still checking auth
+    return <div>Loading...</div>;
+  }
   if (!isAuthenticated) {
+    console.log(isAuthenticated);
     return <Navigate to="/login" replace />;
   }
   return children;
