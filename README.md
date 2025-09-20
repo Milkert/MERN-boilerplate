@@ -167,7 +167,3 @@ lsof -ti:3001 | xargs kill -9
 4. Add tests if applicable
 5. Run linting and tests
 6. Submit a pull request
-
-## 📄 License
-
-MIT License - see LICENSE file for details
