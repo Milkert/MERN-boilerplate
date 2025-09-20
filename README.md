@@ -60,7 +60,7 @@ npm run install-all
 Create `backend/.env`:
 
 ```env
-MONGO_URI=mongodb://localhost:27017/mern-boilerplate
+MONGO_URI=
 MONGO_URI_TEST=
 PORT=3001
 JWT_SECRET=your-super-secret-jwt-key

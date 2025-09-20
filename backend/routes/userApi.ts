@@ -1,6 +1,10 @@
 import { Router, type Request, type Response } from "express";
 import bcrypt from "bcrypt";
+<<<<<<< Updated upstream
 import User from "../models/userModel.js";
+=======
+import jwt, { type JwtPayload } from "jsonwebtoken";
+>>>>>>> Stashed changes
 
 const router = Router();
 
