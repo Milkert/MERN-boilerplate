@@ -97,6 +97,8 @@ npm run client      # Frontend only
 - **Database**: Uses real MongoDB (with cleanup)
 - **Approach**: Individual test cleanup for safety
 
+- The MONGO_URI_TEST should have created a test user in the db as such: { Name: test, Email: test@test.com, Password: test123 }
+
 ```bash
 cd backend
 npm test                 # Run all tests
