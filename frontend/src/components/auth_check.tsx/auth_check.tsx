@@ -1,12 +1,11 @@
 import api from "../../config/api";
 import { Navigate } from "react-router-dom";
-
 import { useQuery } from "@tanstack/react-query";
+import { UserContext } from "../../context/UserContext";
+import type { User } from "../../context/UserContext";
 import type { JSX } from "react";
 
 function ProtectedRoute({ children }: { children: JSX.Element }) {
-  // const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-
   const { isLoading, error, data } = useQuery({
     queryKey: ["auth"],
 
@@ -15,15 +14,14 @@ function ProtectedRoute({ children }: { children: JSX.Element }) {
       return res;
     },
   });
-  console.log(data?.data["email"]);
 
   if (isLoading) return <div>Checking authentication...</div>;
 
-  if (error) {
-    return <Navigate to="/login" replace />;
-  }
+  if (error) return <Navigate to="/login" replace />;
 
-  return children;
+  const user: User = data?.data;
+
+  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
 }
 
 export default ProtectedRoute;
