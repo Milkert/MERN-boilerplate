@@ -9,7 +9,7 @@ router.post("/login", async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   // find user by email
-  const user = await getUserByEmail(email.toLowerCase());
+  const user = await User.findOne({ email: email.toLowerCase() });
 
   // check if user exists and password is correct
   if (!user) {
@@ -61,15 +61,11 @@ router.get("/check-auth", async (req, res) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
-    const user = await getUserByEmail(decoded.id);
+    const user = await User.findOne({ email: decoded.id.toLowerCase() });
     res.status(200).json({ user: user });
   } catch {
     res.status(401).send("Invalid token");
   }
 });
-
-async function getUserByEmail(email: string) {
-  return await User.findOne({ email: email.toLowerCase() });
-}
 
 export default router;
