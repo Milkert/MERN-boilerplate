@@ -37,7 +37,6 @@ createRoot(document.getElementById("root")!).render(
               <Route path="/protected" element={<Protected />} />
             </Route>
           </Route>
-
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
