@@ -19,7 +19,7 @@ function ProtectedRoute({ children }: { children: JSX.Element }) {
 
   if (error) return <Navigate to="/login" replace />;
 
-  const user: User = data?.data;
+  const user: User = data?.data.user;
 
   return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
 }

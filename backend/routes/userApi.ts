@@ -9,7 +9,7 @@ router.post("/login", async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   // find user by email
-  const user = await User.findOne({ email: email.toLowerCase() });
+  const user = await getUserByEmail(email.toLowerCase());
 
   // check if user exists and password is correct
   if (!user) {
@@ -55,16 +55,21 @@ router.post("/signup", async (req: Request, res: Response) => {
   res.status(201).json({ message: "Registration successful" });
 });
 
-router.get("/check-auth", (req, res) => {
+router.get("/check-auth", async (req, res) => {
   const token = req.cookies.token;
   if (!token) return res.status(401).send("Unauthorized");
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
-    res.status(200).json({ email: decoded.id });
+    const user = await getUserByEmail(decoded.id);
+    res.status(200).json({ user: user });
   } catch {
     res.status(401).send("Invalid token");
   }
 });
+
+async function getUserByEmail(email: string) {
+  return await User.findOne({ email: email.toLowerCase() });
+}
 
 export default router;
