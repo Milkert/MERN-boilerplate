@@ -25,7 +25,6 @@ createRoot(document.getElementById("root")!).render(
         <Routes>
           <Route element={<MainLayout />}>
             <Route index element={<Home />} />
-            <Route path="/about" element={<About />} />
             <Route path="/services" element={<Services />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
@@ -33,6 +32,7 @@ createRoot(document.getElementById("root")!).render(
             {/* Protected routes */}
             <Route element={<ProtectedRoute />}>
               <Route path="/protected" element={<Protected />} />
+              <Route path="/about" element={<About />} />
             </Route>
           </Route>
         </Routes>

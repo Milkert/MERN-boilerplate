@@ -56,7 +56,7 @@ router.post("/signup", async (req: Request, res: Response) => {
 });
 
 router.get("/check-auth", async (req, res) => {
-  const token = req.cookies.token;
+  const { token } = req.cookies;
   if (!token) return res.status(401).send("Unauthorized");
 
   try {
