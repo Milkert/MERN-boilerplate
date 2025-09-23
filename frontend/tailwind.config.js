@@ -4,7 +4,12 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}", 
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        "main-color": "#1767e8ff",
+        "main-hover-color": "#0f4ecaff"
+      }
+    },
   },
-plugins: [],
-};
+  plugins: [],
+}
