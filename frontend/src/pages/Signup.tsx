@@ -1,22 +1,26 @@
+import api from "../config/api";
+
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import api from "../config/api";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Signup() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [name, setName] = useState<string>("");
 
+  const navigate = useNavigate();
+
   const mutation = useMutation({
     mutationFn: async (loginData: { email: string; password: string; name: string }) => {
       return api.post("/signup", loginData);
     },
     onSuccess: (data) => {
-      console.log("Signup successful:", data);
+      console.log("Login successful:", data);
+      navigate("/dashboard");
     },
     onError: (error) => {
-      console.error("Signup failed:", error);
+      console.error("Login failed:", error);
     },
   });
 
@@ -33,7 +37,7 @@ function Signup() {
     <>
       <div className="mt-28 w-full flex items-center justify-center">
         <form onSubmit={handleSubmit} className="w-full max-w-md">
-          <h1 className="text-lg text-center mb-6">Create account!</h1>
+          <h1 className="text-lg text-center mb-6">Create Account</h1>
           <div className="mb-4">
             <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
               Surname
