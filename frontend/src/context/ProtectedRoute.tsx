@@ -1,13 +1,14 @@
-import api from "../config/api";
 import { Navigate, Outlet } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { UserContext, type User } from "./UserContext";
+import { UserContext, type User } from "./userContext";
+
+import api from "../config/api";
 
 function ProtectedRoute() {
   const { isLoading, error, data } = useQuery({
     queryKey: ["auth"],
     queryFn: async () => {
-      const res = await api.get("/check-auth"); // backend returns user if logged in
+      const res = await api.get("/auth"); // backend returns user if logged in
 
       return res;
     },

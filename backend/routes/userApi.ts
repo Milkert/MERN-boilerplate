@@ -55,13 +55,13 @@ router.post("/signup", async (req: Request, res: Response) => {
   res.status(201).json({ message: "Registration successful" });
 });
 
-router.get("/check-auth", async (req, res) => {
+router.get("/auth", async (req: Request, res: Response) => {
   const { token } = req.cookies;
   if (!token) return res.status(401).send("Unauthorized");
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
-    const user = await User.findOne({ email: decoded.id.toLowerCase() });
+    const user = await User.findOne({ email: decoded.id.toLowerCase() }).select("-password");
     res.status(200).json({ user: user });
   } catch {
     res.status(401).send("Invalid token");
