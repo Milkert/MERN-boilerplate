@@ -19,7 +19,7 @@ const emailAlreadyExists = {
 
 describe("User API", () => {
   beforeAll(async () => {
-    await mongoose.connect(process.env.MONGO_URI as string);
+    await mongoose.connect(process.env.MONGO_URI_TEST as string);
   });
 
   afterAll(async () => {
