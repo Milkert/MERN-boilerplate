@@ -23,9 +23,7 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-
         <Routes>
-
           <Route element={<MainLayout />}>
             {/* Unprotected routes */}
             <Route index element={<Home />} />
@@ -41,9 +39,7 @@ createRoot(document.getElementById("root")!).render(
           </Route>
 
           <Route path="*" element={<NotFound />} />
-
         </Routes>
-
       </BrowserRouter>
     </QueryClientProvider>
   </StrictMode>,
