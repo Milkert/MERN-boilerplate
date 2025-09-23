@@ -1,8 +1,10 @@
-import { Navigate, Outlet } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { UserContext, type User } from "./userContext";
+import { UserContext } from "./userContext";
+import { type UserType } from "../types/user";
 
 import api from "../config/api";
+
+import { Navigate, Outlet } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 function ProtectedRoute() {
   const { isLoading, error, data } = useQuery({
@@ -19,7 +21,7 @@ function ProtectedRoute() {
 
   if (error) return <Navigate to="/login" replace />;
 
-  const user: User = data?.data.user;
+  const user: UserType = data?.data.user;
 
   return (
     <UserContext.Provider value={user}>

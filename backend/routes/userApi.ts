@@ -1,7 +1,10 @@
 import { Router, type Request, type Response } from "express";
 import bcrypt from "bcrypt";
-import User from "../models/userModel.js";
 import jwt, { type JwtPayload } from "jsonwebtoken";
+
+import User from "../models/userModel.js";
+
+import { type UserType, type DbUserType } from "../types/user.js";
 
 const router = Router();
 
@@ -9,7 +12,7 @@ router.post("/login", async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   // find user by email
-  const user = await User.findOne({ email: email.toLowerCase() });
+  const user: DbUserType | null = await User.findOne({ email: email.toLowerCase() });
 
   // check if user exists and password is correct
   if (!user) {
@@ -31,13 +34,13 @@ router.post("/login", async (req: Request, res: Response) => {
 });
 
 router.post("/signup", async (req: Request, res: Response) => {
-  const { email, password, name } = req.body;
+  const { email, password, name }: UserType = req.body;
 
   if (!email || !password || !name) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
-  const existingUser = await User.findOne({ email: email.toLowerCase() });
+  const existingUser: DbUserType | null = await User.findOne({ email: email.toLowerCase() });
 
   // check if email already exists
   if (existingUser) {
@@ -45,10 +48,10 @@ router.post("/signup", async (req: Request, res: Response) => {
   }
 
   // create new user
-  const user = await User.create({
+  const user: DbUserType | null = await User.create({
     email: email.toLowerCase(),
     password: await bcrypt.hash(password, 10),
-    name: name[0].toUpperCase() + name.slice(1).toLowerCase(),
+    name: name[0]?.toUpperCase() + name.slice(1).toLowerCase(),
   });
   if (!user) {
     return res.status(401).json({ message: "Registration failed" });
@@ -62,7 +65,7 @@ router.get("/auth", async (req: Request, res: Response) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
-    const user = await User.findOne({ email: decoded.id.toLowerCase() }).select("-password");
+    const user: DbUserType | null = await User.findOne({ email: decoded.id.toLowerCase() }).select("-password");
     res.status(200).json({ user: user });
   } catch {
     res.status(401).send("Invalid token");
