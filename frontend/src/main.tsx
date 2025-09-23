@@ -14,7 +14,7 @@ import Signup from "./pages/Signup.tsx";
 import Protected from "./pages/Protected.tsx";
 
 import MainLayout from "./layouts/MainLayout.tsx";
-import ProtectedRoute from "./components/auth_check.tsx/auth_check.tsx";
+import ProtectedRoute from "./context/ProtectedRoute.tsx";
 
 const queryClient = new QueryClient();
 
@@ -29,14 +29,11 @@ createRoot(document.getElementById("root")!).render(
             <Route path="/services" element={<Services />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route
-              path="/protected"
-              element={
-                <ProtectedRoute>
-                  <Protected />
-                </ProtectedRoute>
-              }
-            />
+
+            {/* Protected routes */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="/protected" element={<Protected />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>

@@ -1,18 +1,17 @@
-import api from "../../config/api";
-import { Navigate } from "react-router-dom";
+import api from "../config/api";
+import { Navigate, Outlet } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { UserContext } from "../../context/UserContext";
-import type { User } from "../../context/UserContext";
-import type { JSX } from "react";
+import { UserContext } from "./UserContext";
+import type { User } from "./UserContext";
 
-function ProtectedRoute({ children }: { children: JSX.Element }) {
+function ProtectedRoute() {
   const { isLoading, error, data } = useQuery({
     queryKey: ["auth"],
-
     queryFn: async () => {
       const res = await api.get("/check-auth"); // backend returns user if logged in
       return res;
     },
+    retry: false,
   });
 
   if (isLoading) return <div>Checking authentication...</div>;
@@ -21,7 +20,11 @@ function ProtectedRoute({ children }: { children: JSX.Element }) {
 
   const user: User = data?.data.user;
 
-  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
+  return (
+    <UserContext.Provider value={user}>
+      <Outlet />
+    </UserContext.Provider>
+  );
 }
 
 export default ProtectedRoute;
