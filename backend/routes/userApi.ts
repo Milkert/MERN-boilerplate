@@ -53,6 +53,7 @@ router.post("/signup", async (req: Request, res: Response) => {
     password: await bcrypt.hash(password, 10),
     name: name[0]?.toUpperCase() + name.slice(1).toLowerCase(),
   });
+
   if (!user) {
     return res.status(401).json({ message: "Registration failed" });
   }
