@@ -1,6 +1,7 @@
 import { Router, type Request, type Response } from "express";
 import bcrypt from "bcrypt";
 import User from "../models/userModel.js";
+import jwt, { type JwtPayload } from "jsonwebtoken";
 
 const router = Router();
 
@@ -17,6 +18,15 @@ router.post("/login", async (req: Request, res: Response) => {
   if (!(await bcrypt.compare(password, user.password))) {
     return res.status(401).json({ message: "Incorrect password" });
   }
+
+  const token = jwt.sign({ id: email }, process.env.JWT_SECRET!, { expiresIn: "1d" });
+
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "development",
+    maxAge: 24 * 60 * 60 * 1000, // 1 day
+    sameSite: "strict",
+  });
   res.status(200).json({ message: "Login successful" });
 });
 
@@ -44,6 +54,19 @@ router.post("/signup", async (req: Request, res: Response) => {
     return res.status(401).json({ message: "Registration failed" });
   }
   res.status(201).json({ message: "Registration successful" });
+});
+
+router.get("/auth", async (req: Request, res: Response) => {
+  const { token } = req.cookies;
+  if (!token) return res.status(401).send("Unauthorized");
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
+    const user = await User.findOne({ email: decoded.id.toLowerCase() }).select("-password");
+    res.status(200).json({ user: user });
+  } catch {
+    res.status(401).send("Invalid token");
+  }
 });
 
 export default router;

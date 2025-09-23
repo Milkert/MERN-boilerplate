@@ -11,8 +11,10 @@ import Services from "./pages/Services.tsx";
 
 import Login from "./pages/Login.tsx";
 import Signup from "./pages/Signup.tsx";
+import Protected from "./pages/Protected.tsx";
 
 import MainLayout from "./layouts/MainLayout.tsx";
+import ProtectedRoute from "./context/ProtectedRoute.tsx";
 
 const queryClient = new QueryClient();
 
@@ -23,10 +25,15 @@ createRoot(document.getElementById("root")!).render(
         <Routes>
           <Route element={<MainLayout />}>
             <Route index element={<Home />} />
-            <Route path="/about" element={<About />} />
             <Route path="/services" element={<Services />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/about" element={<About />} />
+
+            {/* Protected routes */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="/protected" element={<Protected />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>
