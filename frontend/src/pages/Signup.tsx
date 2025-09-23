@@ -16,11 +16,11 @@ function Signup() {
       return api.post("/signup", loginData);
     },
     onSuccess: (data) => {
-      console.log("Login successful:", data);
+      console.log("Signup successful:", data);
       navigate("/dashboard");
     },
     onError: (error) => {
-      console.error("Login failed:", error);
+      console.error("Signup failed:", error);
     },
   });
 
