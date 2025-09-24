@@ -41,7 +41,19 @@ router.post("/signup", async (req: Request, res: Response) => {
 
   // check if email already exists
   if (existingUser) {
-    return res.status(400).json({ message: "Email already exists" });
+    return res.status(400).json({ emailError: "Email already exists" });
+  }
+
+  // check password length
+  if (password.length < 8) {
+    return res.status(400).json({ passwordError: "Password must be at least 8 characters" });
+  } else if (password.length > 30) {
+    return res.status(400).json({ passwordError: "Password must be less than 30 characters" });
+  }
+
+  // check if password contains at least one number and atleast one letter
+  if (!/(?=.*[0-9])(?=.*[a-zA-Z])/.test(password)) {
+    return res.status(400).json({ passwordError: "Password must contain at least one letter and one number" });
   }
 
   // create new user
@@ -51,7 +63,7 @@ router.post("/signup", async (req: Request, res: Response) => {
     name: name[0].toUpperCase() + name.slice(1).toLowerCase(),
   });
   if (!user) {
-    return res.status(401).json({ message: "Registration failed" });
+    return res.status(401).json({ emailError: "Registration failed" });
   }
   res.status(201).json({ message: "Registration successful" });
 });
