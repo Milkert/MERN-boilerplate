@@ -26,7 +26,7 @@ function Signup() {
       setNameError("");
       setRepasswordError("");
     },
-    onError: (error: any) => {
+    onError: (error) => {
       setEmailError(error.response?.data?.emailError || "");
       setPasswordError(error.response?.data?.passwordError || "");
       setNameError(error.response?.data?.nameError || "");
@@ -41,6 +41,7 @@ function Signup() {
 
     if (password !== repassword) {
       setRepasswordError("Passwords do not match");
+
       return;
     }
     mutation.mutate({

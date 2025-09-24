@@ -14,11 +14,11 @@ function Login() {
     mutationFn: async (loginData: { email: string; password: string }) => {
       return api.post("/login", loginData);
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       setEmailError("");
       setPasswordError("");
     },
-    onError: (error: any) => {
+    onError: (error) => {
       setEmailError(error.response?.data?.emailError || "");
       setPasswordError(error.response?.data?.passwordError || "");
     },
