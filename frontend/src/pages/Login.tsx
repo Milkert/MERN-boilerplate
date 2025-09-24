@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [emailError, setEmailError] = useState<string>("");
+  const [passwordError, setPasswordError] = useState<string>("");
 
   const mutation = useMutation({
     mutationFn: async (loginData: { email: string; password: string }) => {
@@ -13,9 +15,13 @@ function Login() {
     },
     onSuccess: (data) => {
       console.log("Login successful:", data);
+      setEmailError("");
+      setPasswordError("");
     },
-    onError: (error) => {
+    onError: (error: any) => {
       console.error("Login failed:", error);
+      setEmailError(error.response?.data?.emailError || "");
+      setPasswordError(error.response?.data?.passwordError || "");
     },
   });
 
@@ -41,9 +47,12 @@ function Login() {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-main-color focus:border-main-color"
+              className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-main-color focus:border-main-color ${
+                emailError ? "border-2 border-error-color focus:ring-error-color focus:border-error-color" : "border-gray-300"
+              }`}
               placeholder="Enter your email"
             />
+            {emailError && <p className="text-error-color text-xs mt-1">{emailError}</p>}
           </div>
           <div className="mb-6">
             <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
@@ -54,9 +63,12 @@ function Login() {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-main-color focus:border-main-color"
+              className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-main-color focus:border-main-color ${
+                passwordError ? "border-2 border-error-color focus:ring-error-color focus:border-error-color" : "border-gray-300"
+              }`}
               placeholder="Enter your password"
             />
+            {passwordError && <p className="text-error-color text-xs mt-1">{passwordError}</p>}
           </div>
           <button
             type="submit"

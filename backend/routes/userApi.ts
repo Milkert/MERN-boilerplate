@@ -13,10 +13,10 @@ router.post("/login", async (req: Request, res: Response) => {
 
   // check if user exists and password is correct
   if (!user) {
-    return res.status(401).json({ message: "Email not found" });
+    return res.status(401).json({ emailError: "Email not found" });
   }
   if (!(await bcrypt.compare(password, user.password))) {
-    return res.status(401).json({ message: "Incorrect password" });
+    return res.status(401).json({ passwordError: "Incorrect password" });
   }
 
   const token = jwt.sign({ id: email }, process.env.JWT_SECRET!, { expiresIn: "1d" });
