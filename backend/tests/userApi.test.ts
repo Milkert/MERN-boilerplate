@@ -7,7 +7,7 @@ import User from "../models/userModel.js";
 // test users
 const testUser = {
   email: "testing@testing.com",
-  password: "test",
+  password: "test1test",
   name: "test123",
 };
 
