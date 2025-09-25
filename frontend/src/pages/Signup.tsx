@@ -26,7 +26,7 @@ function Signup() {
       setNameError("");
       setRepasswordError("");
     },
-    onError: (error) => {
+    onError: (error: { response?: { data?: { emailError?: string; passwordError?: string; nameError?: string } } }) => {
       setEmailError(error.response?.data?.emailError || "");
       setPasswordError(error.response?.data?.passwordError || "");
       setNameError(error.response?.data?.nameError || "");

@@ -18,7 +18,7 @@ function Login() {
       setEmailError("");
       setPasswordError("");
     },
-    onError: (error) => {
+    onError: (error: { response?: { data?: { emailError?: string; passwordError?: string } } }) => {
       setEmailError(error.response?.data?.emailError || "");
       setPasswordError(error.response?.data?.passwordError || "");
     },
