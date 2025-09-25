@@ -34,7 +34,12 @@ router.post("/signup", async (req: Request, res: Response) => {
   const { email, password, name } = req.body;
 
   if (!email || !password || !name) {
-    return res.status(400).json({ message: "All fields are required" });
+    return res.status(400).json({ nameError: "All fields are required" });
+  }
+
+  // check if name is between 2 and 15 characters
+  if (name.length < 2 || name.length > 15) {
+    return res.status(400).json({ nameError: "Name must be between 2 and 15 characters" });
   }
 
   const existingUser = await User.findOne({ email: email.toLowerCase() });
