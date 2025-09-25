@@ -2,10 +2,11 @@ import { Router, type Request, type Response } from "express";
 import bcrypt from "bcrypt";
 import User from "../models/userModel.js";
 import jwt, { type JwtPayload } from "jsonwebtoken";
+import { loginLimit, signupLimit } from "../middleware/rateLimit.js";
 
 const router = Router();
 
-router.post("/login", async (req: Request, res: Response) => {
+router.post("/login", loginLimit, async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   // find user by email
@@ -30,7 +31,7 @@ router.post("/login", async (req: Request, res: Response) => {
   res.status(200).json({ message: "Login successful" });
 });
 
-router.post("/signup", async (req: Request, res: Response) => {
+router.post("/signup", signupLimit, async (req: Request, res: Response) => {
   const { email, password, name } = req.body;
 
   if (!email || !password || !name) {
