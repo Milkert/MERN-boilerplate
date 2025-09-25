@@ -64,6 +64,16 @@ describe("User API", () => {
         expect(response.status).toBe(400);
       });
     });
+    describe("Password validation", () => {
+      it("should not signup a user with a password less than 8 characters", async () => {
+        const response = await request(app).post("/api/signup").send({ email: testUser.email, name: testUser.name, password: "short" });
+        expect(response.status).toBe(400);
+      });
+      it("should not signup a user with only letters in the password", async () => {
+        const response = await request(app).post("/api/signup").send({ email: testUser.email, name: testUser.name, password: "onlyletters" });
+        expect(response.status).toBe(400);
+      });
+    });
   });
 
   describe("Login", () => {
