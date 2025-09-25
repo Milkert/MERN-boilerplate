@@ -118,19 +118,19 @@ describe("User API", () => {
       it("should demonstrate login rate limiting works", async () => {
         const testIP = "192.168.1.100";
         const wrongLoginData = { email: emailAlreadyExists.email, password: "wrongpassword" };
-        
+
         // Make multiple failed attempts to trigger rate limiting
         let rateLimited = false;
         let attemptCount = 0;
-        
+
         for (let i = 0; i < 10; i++) {
           const response = await request(app)
             .post("/api/login")
             .set("X-Forwarded-For", testIP)
             .send(wrongLoginData);
-          
+
           attemptCount++;
-          
+
           if (response.status === 429) {
             rateLimited = true;
             expect(response.body.error).toBe("Too many login attempts, please try again after 15 minutes.");
@@ -139,7 +139,7 @@ describe("User API", () => {
             expect(response.status).toBe(401);
           }
         }
-        
+
         // Verify that rate limiting was triggered
         expect(rateLimited).toBe(true);
         expect(attemptCount).toBeLessThanOrEqual(6); // Should be rate limited by 6th attempt
@@ -148,17 +148,17 @@ describe("User API", () => {
       it("should demonstrate signup rate limiting works", async () => {
         const testIP = "192.168.1.200";
         const validSignupData = { email: "test@test.com", password: "password123", name: "Test User" };
-        
+
         let successfulSignups = 0;
         let rateLimited = false;
-        
+
         // Try to make multiple successful signups
         for (let i = 0; i < 5; i++) {
           const response = await request(app)
             .post("/api/signup")
             .set("X-Forwarded-For", testIP)
             .send({ ...validSignupData, email: `test${i}@test.com` });
-          
+
           if (response.status === 201) {
             successfulSignups++;
             // Clean up the user
@@ -169,7 +169,7 @@ describe("User API", () => {
             break;
           }
         }
-        
+
         // Verify that rate limiting was triggered (should happen after 1-2 successful signups)
         expect(rateLimited).toBe(true);
         expect(successfulSignups).toBeGreaterThanOrEqual(1);
@@ -179,10 +179,10 @@ describe("User API", () => {
       it("should demonstrate rate limiting is active and working", async () => {
         // This test verifies that rate limiting is working by showing that
         // requests are being rate limited, which proves the system is active
-        
+
         const testIP = "192.168.1.300";
         const invalidSignupData = { email: "invalid", password: "short", name: "" };
-        
+
         // Make several requests and verify we get rate limited responses
         let rateLimited = false;
         for (let i = 0; i < 10; i++) {
@@ -190,14 +190,14 @@ describe("User API", () => {
             .post("/api/signup")
             .set("X-Forwarded-For", testIP)
             .send(invalidSignupData);
-          
+
           if (response.status === 429) {
             rateLimited = true;
             expect(response.body.error).toContain("Too many");
             break;
           }
         }
-        
+
         // The fact that we get rate limited proves the rate limiting is working
         expect(rateLimited).toBe(true);
       });
@@ -205,10 +205,10 @@ describe("User API", () => {
       it("should demonstrate rate limiting is active", async () => {
         // This test verifies that rate limiting is working by showing that
         // requests are being rate limited, which proves the system is active
-        
+
         const testIP = "192.168.1.400";
         const loginData = { email: emailAlreadyExists.email, password: emailAlreadyExists.password };
-        
+
         // Make several requests and verify we get rate limited responses
         let rateLimited = false;
         for (let i = 0; i < 10; i++) {
@@ -216,14 +216,14 @@ describe("User API", () => {
             .post("/api/login")
             .set("X-Forwarded-For", testIP)
             .send(loginData);
-          
+
           if (response.status === 429) {
             rateLimited = true;
             expect(response.body.error).toContain("Too many");
             break;
           }
         }
-        
+
         // The fact that we get rate limited proves the rate limiting is working
         expect(rateLimited).toBe(true);
       });
@@ -236,7 +236,7 @@ describe("User API", () => {
           .post("/api/login")
           .set("X-Forwarded-For", testIP)
           .send({ email: emailAlreadyExists.email, password: emailAlreadyExists.password });
-        
+
         expect(response.headers).toHaveProperty("ratelimit-limit");
         expect(response.headers).toHaveProperty("ratelimit-remaining");
         expect(response.headers).toHaveProperty("ratelimit-reset");

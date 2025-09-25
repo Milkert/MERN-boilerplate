@@ -18,9 +18,13 @@ function Login() {
       setEmailError("");
       setPasswordError("");
     },
-    onError: (error: { response?: { data?: { emailError?: string; passwordError?: string } } }) => {
-      setEmailError(error.response?.data?.emailError || "");
-      setPasswordError(error.response?.data?.passwordError || "");
+    onError: (error: { response?: { status?: number; data?: { emailError?: string; passwordError?: string; error?: string } } }) => {
+      if (error.response?.status === 429) {
+        setEmailError(error.response.data?.error || "Rate limit exceeded");
+      } else {
+        setEmailError(error.response?.data?.emailError || "");
+        setPasswordError(error.response?.data?.passwordError || "");
+      }
     },
   });
 

@@ -26,10 +26,14 @@ function Signup() {
       setNameError("");
       setRepasswordError("");
     },
-    onError: (error: { response?: { data?: { emailError?: string; passwordError?: string; nameError?: string } } }) => {
-      setEmailError(error.response?.data?.emailError || "");
-      setPasswordError(error.response?.data?.passwordError || "");
-      setNameError(error.response?.data?.nameError || "");
+    onError: (error: { response?: { data?: { emailError?: string; passwordError?: string; nameError?: string; error?: string }; status?: number } }) => {
+      if (error.response?.status === 429) {
+        setEmailError(error.response.data?.error || "Rate limit exceeded");
+      } else {
+        setEmailError(error.response?.data?.emailError || "");
+        setPasswordError(error.response?.data?.passwordError || "");
+        setNameError(error.response?.data?.nameError || "");
+      }
     },
   });
 
