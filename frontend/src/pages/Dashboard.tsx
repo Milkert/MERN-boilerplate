@@ -1,13 +1,13 @@
 import { useUser } from "../context/userContext";
 
-function Protected() {
+function Dashboard() {
   const user = useUser();
 
   return (
     <>
       <div className="w-screen h-screen flex justify-center items-center">
         <h1 className="text-xl">
-          Protected route ( / ) Welcome, {user?.name}
+          /dashboard - Welcome {user?.name}
           <br />
         </h1>
       </div>
@@ -15,4 +15,4 @@ function Protected() {
   );
 }
 
-export default Protected;
+export default Dashboard;

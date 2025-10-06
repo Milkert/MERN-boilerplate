@@ -1,8 +1,11 @@
+import api from "../config/api";
+
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import api from "../config/api";
 import { Link } from "react-router-dom";
 import { MdOutlineError } from "react-icons/md";
+import { Link, useNavigate } from "react-router-dom";
 
 function Signup() {
   const [email, setEmail] = useState<string>("");
@@ -16,6 +19,8 @@ function Signup() {
   const [nameError, setNameError] = useState<string>("");
   const [repasswordError, setRepasswordError] = useState<string>("");
 
+  const navigate = useNavigate();
+
   const mutation = useMutation({
     mutationFn: async (signupData: { email: string; password: string; name: string }) => {
       return api.post("/signup", signupData);
@@ -25,6 +30,7 @@ function Signup() {
       setPasswordError("");
       setNameError("");
       setRepasswordError("");
+      navigate("/dashboard");
     },
     onError: (error: { response?: { data?: { emailError?: string; passwordError?: string; nameError?: string } } }) => {
       setEmailError(error.response?.data?.emailError || "");
@@ -55,7 +61,7 @@ function Signup() {
     <>
       <div className="mt-28 w-full flex items-center justify-center">
         <form onSubmit={handleSubmit} className="w-full max-w-md">
-          <h1 className="text-lg text-center mb-2">Create account!</h1>
+          <h1 className="text-lg text-center mb-6">Create Account</h1>
           <div className="mb-4">
             <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
               Surname<span className="text-red-600"> *</span>

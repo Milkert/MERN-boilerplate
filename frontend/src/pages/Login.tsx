@@ -1,14 +1,19 @@
+import api from "../config/api";
+
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import api from "../config/api";
 import { Link } from "react-router-dom";
 import { MdOutlineError } from "react-icons/md";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [emailError, setEmailError] = useState<string>("");
   const [passwordError, setPasswordError] = useState<string>("");
+
+  const navigate = useNavigate();
 
   const mutation = useMutation({
     mutationFn: async (loginData: { email: string; password: string }) => {
@@ -17,6 +22,8 @@ function Login() {
     onSuccess: () => {
       setEmailError("");
       setPasswordError("");
+
+      navigate("/dashboard");
     },
     onError: (error: { response?: { data?: { emailError?: string; passwordError?: string } } }) => {
       setEmailError(error.response?.data?.emailError || "");
