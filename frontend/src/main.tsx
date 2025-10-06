@@ -11,7 +11,7 @@ import Services from "./pages/Services.tsx";
 
 import Login from "./pages/Login.tsx";
 import Signup from "./pages/Signup.tsx";
-import Protected from "./pages/Protected.tsx";
+import Dashboard from "./pages/Dashboard.tsx";
 
 import MainLayout from "./layouts/MainLayout.tsx";
 import ProtectedRoute from "./context/ProtectedRoute.tsx";
@@ -32,7 +32,7 @@ createRoot(document.getElementById("root")!).render(
 
             {/* Protected routes */}
             <Route element={<ProtectedRoute />}>
-              <Route path="/protected" element={<Protected />} />
+              <Route path="/dashboard" element={<Dashboard />} />
             </Route>
           </Route>
         </Routes>
