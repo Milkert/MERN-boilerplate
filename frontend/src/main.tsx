@@ -11,6 +11,8 @@ import Services from "./pages/Services.tsx";
 
 import Login from "./pages/Login.tsx";
 import Signup from "./pages/Signup.tsx";
+import Protected from "./pages/Protected.tsx";
+import NotFound from "./pages/NotFound.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
 
 import MainLayout from "./layouts/MainLayout.tsx";
@@ -24,6 +26,7 @@ createRoot(document.getElementById("root")!).render(
       <BrowserRouter>
         <Routes>
           <Route element={<MainLayout />}>
+            {/* Unprotected routes */}
             <Route index element={<Home />} />
             <Route path="/services" element={<Services />} />
             <Route path="/login" element={<Login />} />
@@ -35,6 +38,7 @@ createRoot(document.getElementById("root")!).render(
               <Route path="/dashboard" element={<Dashboard />} />
             </Route>
           </Route>
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
