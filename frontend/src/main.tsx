@@ -11,7 +11,6 @@ import Services from "./pages/Services.tsx";
 
 import Login from "./pages/Login.tsx";
 import Signup from "./pages/Signup.tsx";
-import Protected from "./pages/Protected.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
 

@@ -2,8 +2,6 @@ import api from "../config/api";
 
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import api from "../config/api";
-import { Link } from "react-router-dom";
 import { MdOutlineError } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 
