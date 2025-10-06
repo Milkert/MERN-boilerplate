@@ -1,11 +1,14 @@
+import api from "../config/api";
+
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import api from "../config/api";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
+  const navigate = useNavigate();
 
   const mutation = useMutation({
     mutationFn: async (loginData: { email: string; password: string }) => {
@@ -13,6 +16,7 @@ function Login() {
     },
     onSuccess: (data) => {
       console.log("Login successful:", data);
+      navigate("/dashboard");
     },
     onError: (error) => {
       console.error("Login failed:", error);

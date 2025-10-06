@@ -53,6 +53,16 @@ router.post("/signup", async (req: Request, res: Response) => {
   if (!user) {
     return res.status(401).json({ message: "Registration failed" });
   }
+
+  const token = jwt.sign({ id: email }, process.env.JWT_SECRET!, { expiresIn: "1d" });
+
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "development",
+    maxAge: 24 * 60 * 60 * 1000, // 1 day
+    sameSite: "strict",
+  });
+
   res.status(201).json({ message: "Registration successful" });
 });
 
