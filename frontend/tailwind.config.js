@@ -7,7 +7,8 @@ export default {
     extend: {
       colors: {
         "main-color": "#1767e8ff",
-        "main-hover-color": "#0f4ecaff"
+        "main-hover-color": "#0f4ecaff",
+        "error-color": "#ff4d4d"
       }
     },
   },
