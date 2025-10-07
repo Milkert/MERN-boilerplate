@@ -7,7 +7,7 @@ import { AxiosError } from "axios";
 
 import { Button } from "../shadcn/button";
 import { Input } from "../shadcn/input";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../shadcn/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../shadcn/form";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,10 +28,10 @@ const LoginForm = () => {
     onError: (error) => {
       const err = error as AxiosError<{ emailError?: string; passwordError?: string }>;
       if (err.response?.data.emailError) {
-        form.setError("email", { message: error.response.data.emailError });
+        form.setError("email", { message: err.response?.data.emailError });
       }
       if (err.response?.data.passwordError) {
-        form.setError("password", { message: error.response.data.passwordError });
+        form.setError("password", { message: err.response?.data.passwordError });
       }
     },
   });
@@ -91,36 +91,3 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
-
-/* const form = function Login() {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-
-  const navigate = useNavigate();
-
-  const mutation = useMutation({
-    mutationFn: async (loginData: { email: string; password: string }) => {
-      return api.post("/login", loginData);
-    },
-    onSuccess: () => {
-      setEmailError("");
-      setPasswordError("");
-
-      navigate("/dashboard");
-    },
-    onError: (error: { response?: { data?: { emailError?: string; passwordError?: string } } }) => {
-      setEmailError(error.response?.data?.emailError || "");
-      setPasswordError(error.response?.data?.passwordError || "");
-    },
-  });
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (document.activeElement instanceof HTMLElement) {
-      document.activeElement.blur();
-    }
-    mutation.mutate({
-      email,
-      password,
-    });
-  }; */

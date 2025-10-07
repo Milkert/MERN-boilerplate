@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { UserContext, type User } from "./userContext";
+import { UserContext, type User } from "./authContext";
 
 import api from "../config/api";
 
