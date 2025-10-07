@@ -1,8 +1,8 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { UserContext, type User } from "./authContext";
+import { UserContext, type User } from "../../context/authContext";
 
-import api from "../config/api";
+import api from "../../config/api";
 
 function ProtectedRoute() {
   const { isLoading, error, data } = useQuery({

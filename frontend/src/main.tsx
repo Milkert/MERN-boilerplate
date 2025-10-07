@@ -15,7 +15,7 @@ import NotFound from "./pages/NotFound.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
 
 import MainLayout from "./layouts/MainLayout.tsx";
-import ProtectedRoute from "./context/ProtectedRoute.tsx";
+import ProtectedRoute from "./components/routes/ProtectedRoute.tsx";
 
 const queryClient = new QueryClient();
 
