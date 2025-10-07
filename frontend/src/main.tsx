@@ -5,17 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import "./index.css";
 
-import Home from "./pages/Home.tsx";
-import About from "./pages/About.tsx";
-import Services from "./pages/Services.tsx";
-
-import Login from "./pages/Login.tsx";
-import Signup from "./pages/Signup.tsx";
-import NotFound from "./pages/NotFound.tsx";
-import Dashboard from "./pages/Dashboard.tsx";
-
-import MainLayout from "./layouts/MainLayout.tsx";
-import ProtectedRoute from "./components/routes/ProtectedRoute.tsx";
+import AppRoutes from "./components/routes/AppRoutes";
 
 const queryClient = new QueryClient();
 
@@ -23,22 +13,7 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <Routes>
-          <Route element={<MainLayout />}>
-            {/* Unprotected routes */}
-            <Route index element={<Home />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/about" element={<About />} />
-
-            {/* Protected routes */}
-            <Route element={<ProtectedRoute />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-            </Route>
-          </Route>
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <AppRoutes />
       </BrowserRouter>
     </QueryClientProvider>
   </StrictMode>,
