@@ -34,7 +34,7 @@ function Navbar() {
 
       {/* Desktop Login Button */}
       <div className="hidden md:flex flex-1 justify-end items-center h-full">
-        <Link to="/login" className="hover:bg-main-hover-color bg-main-color text-l text-white border-black border-sm rounded px-7 py-2 rounded-lg">
+        <Link to="/login" className="bg-primary hover:bg-primary-hover text-l text-white border-black border-sm rounded px-7 py-2 rounded-lg">
           Login
         </Link>
       </div>
@@ -79,7 +79,7 @@ function Navbar() {
             </Link>
             <Link
               to="/login"
-              className="block px-3 py-2 bg-main-color text-white rounded-md text-center hover:bg-main-hover-color"
+              className="block px-3 py-2 bg-primary text-white rounded-md text-center hover:bg-primary-hover"
               onClick={() => setIsMenuOpen(false)}
             >
               Login

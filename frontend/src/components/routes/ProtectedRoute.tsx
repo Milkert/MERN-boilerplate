@@ -1,8 +1,8 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { UserContext, type User } from "./userContext";
+import { AuthContext, type User } from "../../context/authContext";
 
-import api from "../config/api";
+import api from "../../config/api";
 
 function ProtectedRoute() {
   const { isLoading, error, data } = useQuery({
@@ -22,9 +22,9 @@ function ProtectedRoute() {
   const user: User = data?.data.user;
 
   return (
-    <UserContext.Provider value={user}>
+    <AuthContext.Provider value={user}>
       <Outlet />
-    </UserContext.Provider>
+    </AuthContext.Provider>
   );
 }
 
