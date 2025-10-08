@@ -5,6 +5,7 @@ import api from "../../config/api";
 
 import { Button } from "../shadcn/button";
 import { Input } from "../shadcn/input";
+import { PasswordInput } from "../shadcn/password-input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../shadcn/form";
 
 import { useForm } from "react-hook-form";
@@ -75,7 +76,7 @@ const LoginForm = () => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="••••••••" {...field} type="password" />
+                <PasswordInput placeholder="••••••••" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -5,11 +5,11 @@ import api from "../../config/api";
 
 import { Button } from "../shadcn/button";
 import { Input } from "../shadcn/input";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../shadcn/form";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../shadcn/tooltip";
-import { Info } from "lucide-react";
+import { PasswordInput } from "../shadcn/password-input";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from "../shadcn/form";
 
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { AxiosError } from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -18,6 +18,8 @@ import { useNavigate } from "react-router-dom";
 
 const SignupForm = () => {
   const navigate = useNavigate();
+  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+
   // Define your form.
   const form = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
@@ -97,24 +99,25 @@ const SignupForm = () => {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <div className="flex items-center gap-2">
-                <FormLabel>
-                  Password <span className="text-red-500">*</span>
-                </FormLabel>
-                <TooltipProvider>
-                  <Tooltip delayDuration={0}>
-                    <TooltipTrigger asChild>
-                      <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Must be at least 8 characters and include letters and numbers</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </div>
+              <FormLabel>
+                Password <span className="text-red-500">*</span>
+              </FormLabel>
               <FormControl>
-                <Input placeholder="••••••••" {...field} type="password" />
+                <PasswordInput
+                  placeholder="••••••••"
+                  {...field}
+                  onFocus={() => setIsPasswordFocused(true)}
+                  onBlur={() => {
+                    setIsPasswordFocused(false);
+                    field.onBlur();
+                  }}
+                />
               </FormControl>
+              {isPasswordFocused && (
+                <FormDescription>
+                  Must be at least 8 characters and include letters and numbers
+                </FormDescription>
+              )}
               <FormMessage />
             </FormItem>
           )}
@@ -128,7 +131,7 @@ const SignupForm = () => {
                 Confirm password <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input placeholder="••••••••" {...field} type="password" />
+                <PasswordInput placeholder="••••••••" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
