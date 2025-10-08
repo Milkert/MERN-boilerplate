@@ -3,13 +3,13 @@ import Navbar from "../components/nav/Navbar";
 
 function MainLayout() {
   return (
-    <div className="main-layout">
+    <div>
       <Navbar />
       <main>
         <Outlet /> {/* child route content goes here */}
       </main>
     </div>
   );
-};
+}
 
 export default MainLayout;

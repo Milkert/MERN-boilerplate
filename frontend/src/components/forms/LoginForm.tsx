@@ -1,7 +1,6 @@
-"use client";
-
-import { loginSchema } from "../../lib/zodSchemas";
 import api from "../../config/api";
+import { loginSchema } from "../../lib/zodSchemas";
+import { useAuth } from "../../context/authContext.tsx";
 
 import { Button } from "../shadcn/button";
 import { Input } from "../shadcn/input";
@@ -16,6 +15,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
+  const { setUser } = useAuth();
   const navigate = useNavigate();
 
   // Define form
@@ -29,9 +29,12 @@ const LoginForm = () => {
 
   const mutation = useMutation({
     mutationFn: async (loginData: { email: string; password: string }) => {
-      return api.post("/login", loginData);
+      const res = await api.post("/login", loginData);
+
+      return res.data;
     },
-    onSuccess: () => {
+    onSuccess: (user) => {
+      setUser(user);
       navigate("/dashboard");
     },
     onError: (error) => {

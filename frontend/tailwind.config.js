@@ -6,6 +6,7 @@ export default {
       colors: {
         // Main colors adjustments should also be made in src/index.css for shadcn
         "primary-hover": "hsl(var(--primary-hover))",
+        "secondary-hover": "hsl(var(--secondary-hover))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
