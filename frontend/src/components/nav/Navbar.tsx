@@ -1,44 +1,68 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import api from "../../config/api";
+import { Button } from "../shadcn/button";
+import { useAuth } from "../../context/authContext.tsx";
 
-function Navbar() {
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useUser } from "../../context/authContext";
+import { useMutation } from "@tanstack/react-query";
+
+const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const user = useUser();
+
+  const navigate = useNavigate();
+  const { setUser } = useAuth();
+
+  const logoutMutation = useMutation({
+    mutationFn: async () => {
+      await api.post("/logout");
+    },
+    onSuccess: () => {
+      setUser(null);
+      navigate("/login");
+    },
+  });
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   return (
-    <nav className="w-full h-16 flex px-4 md:px-10 border-b relative">
+    <nav className="w-full h-16 flex px-4 md:px-10 shadow relative">
       {/* Logo */}
       <div className="flex-1 h-full flex items-center">
         <Link to="/" className="text-xl">
           Logo
         </Link>
       </div>
-
       {/* Desktop Navigation */}
       <div className="hidden md:flex flex-[2] justify-center items-center h-full">
         <div className="flex gap-14">
-          <Link to="/" className="hover:text-gray-600 cursor-pointer">
+          <Link to="/" className="cursor-pointer">
             Home
           </Link>
-          <Link to="/about" className="hover:text-gray-600 cursor-pointer">
+          <Link to="/about" className="cursor-pointer">
             About
           </Link>
-          <Link to="/services" className="hover:text-gray-600 cursor-pointer">
+          <Link to="/services" className="cursor-pointer">
             Services
           </Link>
         </div>
       </div>
-
       {/* Desktop Login Button */}
       <div className="hidden md:flex flex-1 justify-end items-center h-full">
-        <Link to="/login" className="bg-primary hover:bg-primary-hover text-l text-white border-black border-sm rounded px-7 py-2 rounded-lg">
-          Login
-        </Link>
+        {!user && (
+          <Link to="/login">
+            <Button>Login</Button>
+          </Link>
+        )}
+        {user && (
+          <Button variant="secondary" onClick={() => logoutMutation.mutate()}>
+            Logout {user.name}
+          </Button>
+        )}
       </div>
-
       {/* Mobile Menu Button */}
       <div className="md:hidden flex items-center">
         <button onClick={toggleMenu} className="text-gray-600 hover:text-gray-900 focus:outline-none focus:text-gray-900">
@@ -51,7 +75,6 @@ function Navbar() {
           </svg>
         </button>
       </div>
-
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="absolute top-16 left-0 w-full bg-white border-b shadow-lg md:hidden z-50">
@@ -77,18 +100,14 @@ function Navbar() {
             >
               Services
             </Link>
-            <Link
-              to="/login"
-              className="block px-3 py-2 bg-primary text-white rounded-md text-center hover:bg-primary-hover"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Login
+            <Link to="/login" onClick={() => setIsMenuOpen(false)}>
+              <Button>Login</Button>
             </Link>
           </div>
         </div>
       )}
     </nav>
   );
-}
+};
 
 export default Navbar;

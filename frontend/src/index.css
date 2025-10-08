@@ -21,7 +21,8 @@ body {
     --primary: 221 82% 52%; /* Change this */
     --primary-foreground: 0 0% 98%; /* Change this */
     --primary-hover: 221 82% 40%; /* Change this */
-    --secondary: 0 0% 96.1%;
+    --secondary-hover: 0 0% 76.1%; /* Change this */
+    --secondary: 0 0% 86.1%;
     --secondary-foreground: 0 0% 9%;
     --muted: 0 0% 96.1%;
     --muted-foreground: 0 0% 45.1%;
@@ -70,6 +71,7 @@ body {
 @layer base {
   * {
     @apply border-border;
+    @apply font-['Montserrat']
   }
   body {
     @apply bg-background text-foreground;

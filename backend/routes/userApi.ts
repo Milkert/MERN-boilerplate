@@ -1,7 +1,8 @@
-import { Router, type Request, type Response } from "express";
-import bcrypt from "bcrypt";
 import User from "../models/userModel.js";
+
+import bcrypt from "bcrypt";
 import jwt, { type JwtPayload } from "jsonwebtoken";
+import { Router, type Request, type Response } from "express";
 
 const router = Router();
 
@@ -27,7 +28,7 @@ router.post("/login", async (req: Request, res: Response) => {
     maxAge: 24 * 60 * 60 * 1000, // 1 day
     sameSite: "strict",
   });
-  res.status(200).json({ message: "Login successful" });
+  res.status(200).json({ email: user.email, name: user.name });
 });
 
 router.post("/signup", async (req: Request, res: Response) => {
@@ -83,7 +84,7 @@ router.post("/signup", async (req: Request, res: Response) => {
   res.status(201).json({ message: "Registration successful" });
 });
 
-router.get("/auth", async (req: Request, res: Response) => {
+router.get("/auth-status", async (req: Request, res: Response) => {
   const { token } = req.cookies;
   if (!token) return res.status(401).send("Unauthorized");
 
@@ -94,6 +95,11 @@ router.get("/auth", async (req: Request, res: Response) => {
   } catch {
     res.status(401).send("Invalid token");
   }
+});
+
+router.post("/logout", (req: Request, res: Response) => {
+  res.clearCookie("token");
+  res.status(200).json({ message: "Logged out successfully" });
 });
 
 export default router;

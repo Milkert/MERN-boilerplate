@@ -1,7 +1,7 @@
-"use client";
-
-import { signupSchema } from "../../lib/zodSchemas";
 import api from "../../config/api";
+import { signupSchema } from "../../lib/zodSchemas";
+import { useAuth } from "../../context/authContext.tsx";
+import { type User } from "../../types/userType";
 
 import { Button } from "../shadcn/button";
 import { Input } from "../shadcn/input";
@@ -19,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 const SignupForm = () => {
   const navigate = useNavigate();
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+  const { setUser } = useAuth();
 
   // Define your form.
   const form = useForm<z.infer<typeof signupSchema>>({
@@ -36,6 +37,7 @@ const SignupForm = () => {
       return api.post("/signup", signupData);
     },
     onSuccess: () => {
+      setUser(form.getValues() as User);
       navigate("/dashboard");
     },
     onError: (error) => {
@@ -113,11 +115,7 @@ const SignupForm = () => {
                   }}
                 />
               </FormControl>
-              {isPasswordFocused && (
-                <FormDescription>
-                  Must be at least 8 characters and include letters and numbers
-                </FormDescription>
-              )}
+              {isPasswordFocused && <FormDescription>Must be at least 8 characters and include letters and numbers</FormDescription>}
               <FormMessage />
             </FormItem>
           )}

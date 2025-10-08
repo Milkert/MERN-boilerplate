@@ -1,6 +1,6 @@
 import { useUser } from "../context/authContext";
 
-function Dashboard() {
+const Dashboard = () => {
   const user = useUser();
 
   return (
@@ -13,6 +13,6 @@ function Dashboard() {
       </div>
     </>
   );
-}
+};
 
 export default Dashboard;
