@@ -6,7 +6,9 @@ import Login from "../../pages/Login";
 import Signup from "../../pages/Signup";
 import Dashboard from "../../pages/Dashboard";
 import NotFound from "../../pages/NotFound";
+
 import ProtectedRoute from "./ProtectedRoute";
+import PublicOnlyRoute from "./PublicOnlyRoute";
 
 import { Route, Routes } from "react-router-dom";
 
@@ -16,10 +18,14 @@ const AppRoutes = () => {
       <Route element={<MainLayout />}>
         {/* Unprotected routes */}
         <Route index element={<Home />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
         <Route path="/about" element={<About />} />
+        <Route path="/services" element={<Services />} />
+
+        {/* Public only routes */}
+        <Route element={<PublicOnlyRoute />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+        </Route>
 
         {/* Protected routes */}
         <Route element={<ProtectedRoute />}>

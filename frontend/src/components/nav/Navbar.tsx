@@ -1,7 +1,6 @@
 import api from "../../config/api";
 import { Button } from "../shadcn/button";
-import { useAuth } from "../../context/authContext.tsx";
-import { useUser } from "../../context/authContext";
+import { useUser, useAuth } from "../../context/AuthContext";
 
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";

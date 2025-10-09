@@ -1,5 +1,8 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import api from "../config/api";
 import { type User } from "../types/userType";
+
+import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 type AuthContextType = {
   user: User | null;
@@ -10,6 +13,30 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+
+  // Fetch user on mount
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["auth-status"],
+    queryFn: async () => {
+      const res = await api.get("/auth-status");
+
+      return res.data.user as User | null;
+    },
+    retry: false,
+    refetchOnWindowFocus: false,
+  });
+
+  useEffect(() => {
+    if (data) {
+      setUser(data);
+    } else if (error) {
+      setUser(null);
+    }
+  }, [data, error]);
+
+  if (isLoading) {
+    return <div>Loading user...</div>;
+  }
 
   return <AuthContext.Provider value={{ user, setUser }}>{children}</AuthContext.Provider>;
 }

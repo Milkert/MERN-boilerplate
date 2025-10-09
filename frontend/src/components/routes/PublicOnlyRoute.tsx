@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useUser } from "../../context/AuthContext.tsx";
 
-function ProtectedRoute() {
+const PublicOnlyRoute = () => {
   const user = useUser();
 
   if (user === undefined) {
@@ -9,13 +9,13 @@ function ProtectedRoute() {
     return <div>Loading...</div>;
   }
 
-  if (!user) {
+  if (user) {
     // Not logged in
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/dashboard" replace />;
   }
 
   // User is logged in
   return <Outlet />;
-}
+};
 
-export default ProtectedRoute;
+export default PublicOnlyRoute;
