@@ -99,9 +99,23 @@ const Navbar = () => {
             >
               Services
             </Link>
-            <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-              <Button>Login</Button>
-            </Link>
+            {!user && (
+              <Link to="/login" onClick={() => setIsMenuOpen(false)}>
+                <Button className="w-full mt-2">Login</Button>
+              </Link>
+            )}
+            {user && (
+              <Button
+                className="w-full mt-2"
+                variant="secondary"
+                onClick={() => {
+                  logoutMutation.mutate();
+                  setIsMenuOpen(false);
+                }}
+              >
+                Logout {user.name}
+              </Button>
+            )}
           </div>
         </div>
       )}
