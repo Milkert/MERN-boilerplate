@@ -1,4 +1,4 @@
-import { useUser } from "../context/authContext";
+import { useUser } from "../context/AuthContext";
 
 const Dashboard = () => {
   const user = useUser();

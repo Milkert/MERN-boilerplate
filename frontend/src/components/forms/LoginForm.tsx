@@ -1,6 +1,6 @@
 import api from "../../config/api";
 import { loginSchema } from "../../lib/zodSchemas";
-import { useAuth } from "../../context/authContext.tsx";
+import { useAuth } from "../../context/AuthContext.tsx";
 
 import { Button } from "../shadcn/button";
 import { Input } from "../shadcn/input";

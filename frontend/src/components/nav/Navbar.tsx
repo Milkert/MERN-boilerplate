@@ -1,7 +1,6 @@
 import api from "../../config/api";
 import { Button } from "../shadcn/button";
-import { useAuth } from "../../context/authContext.tsx";
-import { useUser } from "../../context/authContext";
+import { useUser, useAuth } from "../../context/AuthContext";
 
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -100,9 +99,23 @@ const Navbar = () => {
             >
               Services
             </Link>
-            <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-              <Button>Login</Button>
-            </Link>
+            {!user && (
+              <Link to="/login" onClick={() => setIsMenuOpen(false)}>
+                <Button className="w-full mt-2">Login</Button>
+              </Link>
+            )}
+            {user && (
+              <Button
+                className="w-full mt-2"
+                variant="secondary"
+                onClick={() => {
+                  logoutMutation.mutate();
+                  setIsMenuOpen(false);
+                }}
+              >
+                Logout {user.name}
+              </Button>
+            )}
           </div>
         </div>
       )}

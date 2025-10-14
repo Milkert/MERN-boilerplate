@@ -1,6 +1,6 @@
 import api from "../../config/api";
 import { signupSchema } from "../../lib/zodSchemas";
-import { useAuth } from "../../context/authContext.tsx";
+import { useAuth } from "../../context/AuthContext.tsx";
 import { type User } from "../../types/userType";
 
 import { Button } from "../shadcn/button";
