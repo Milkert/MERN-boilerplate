@@ -129,7 +129,7 @@ router.post("/auth/google", async (req, res) => {
 
     res.cookie("token", jwtToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "producation",
+      secure: process.env.NODE_ENV === "development",
       maxAge: 24 * 60 * 60 * 1000,
       sameSite: "strict",
     });
