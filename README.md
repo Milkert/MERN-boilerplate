@@ -16,11 +16,10 @@ npm run install-all
 ```
 
 2. **Environment variables**
-
 View .env.example in the root of the project.
-```
 
 3. **Start development**
+
 ```bash
 npm run dev  # Both frontend and backend
 ```
