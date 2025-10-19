@@ -4,9 +4,11 @@ import bcrypt from "bcrypt";
 import jwt, { type JwtPayload } from "jsonwebtoken";
 import { Router, type Request, type Response } from "express";
 import { OAuth2Client } from "google-auth-library";
+import { loginLimit, signupLimit } from "../middleware/ratelimit.js";
+
 const router = Router();
 
-router.post("/login", async (req: Request, res: Response) => {
+router.post("/login", loginLimit, async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   // find user by email
@@ -24,14 +26,14 @@ router.post("/login", async (req: Request, res: Response) => {
 
   res.cookie("token", token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "development",
+    secure: true,
     maxAge: 24 * 60 * 60 * 1000, // 1 day
     sameSite: "strict",
   });
   res.status(200).json({ email: user.email, name: user.name });
 });
 
-router.post("/signup", async (req: Request, res: Response) => {
+router.post("/signup", signupLimit, async (req: Request, res: Response) => {
   const { email, password, name } = req.body;
 
   if (!email || !password || !name) {
@@ -76,7 +78,7 @@ router.post("/signup", async (req: Request, res: Response) => {
 
   res.cookie("token", token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "development",
+    secure: true,
     maxAge: 24 * 60 * 60 * 1000, // 1 day
     sameSite: "strict",
   });
@@ -112,6 +114,11 @@ router.post("/auth/google", async (req, res) => {
       audience: process.env.GOOGLE_CLIENT_ID!,
     });
     const payload = ticket.getPayload();
+
+    if (!payload) {
+      return res.status(401).json({ message: "Google Auth failed" });
+    }
+
     const { email, name } = payload;
 
     if (!email) return res.status(400).json({ message: "Google account has no email" });
@@ -129,7 +136,7 @@ router.post("/auth/google", async (req, res) => {
 
     res.cookie("token", jwtToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "development",
+      secure: true,
       maxAge: 24 * 60 * 60 * 1000,
       sameSite: "strict",
     });

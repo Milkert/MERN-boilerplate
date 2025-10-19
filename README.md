@@ -1,171 +1,99 @@
 # MERN Boilerplate
 
-A full-stack MERN (MongoDB, Express.js, React, Node.js) boilerplate with TypeScript, authentication, and modern development tools.
+Full-stack TypeScript boilerplate with React, Express, MongoDB, and authentication.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
-### Frontend
+**Frontend:** React 19, TypeScript, Vite, Tailwind CSS, React Router, React Query  
+**Backend:** Node.js, Express, TypeScript, MongoDB, JWT, bcrypt  
+**Tools:** ESLint, Jest, Nodemon
 
-- **React 19** - UI library
-- **TypeScript** - Type safety
-- **Vite** - Build tool and dev server
-- **Tailwind CSS** - Utility-first CSS framework
-- **React Router** - Client-side routing
-- **React Query** - Server state management
-- **Axios** - HTTP client
+## Setup
 
-### Backend
-
-- **Node.js** - Runtime environment
-- **Express.js** - Web framework
-- **TypeScript** - Type safety
-- **MongoDB** - Database
-- **Mongoose** - ODM for MongoDB
-- **JWT** - Authentication tokens
-- **bcrypt** - Password hashing
-- **CORS** - Cross-origin resource sharing
-
-### Development Tools
-
-- **ESLint** - Code linting with custom rules
-- **Jest** - Testing framework
-- **Nodemon** - Auto-restart development server
-- **TSX** - TypeScript execution for Node.js
-
-## 🚀 Quick Start
-
-### Prerequisites
-
-- Node.js 22+
-- MongoDB (local or Atlas)
-- Git
-
-### Installation
-
-1. **Clone the repository**
-
-```bash
-git clone <repository-url>
-cd MERN-boilerplate
-```
-
-2. **Install all dependencies**
-
+1. **Install dependencies**
 ```bash
 npm run install-all
 ```
 
-3. **Set up environment variables**
+2. **Environment variables**
 
-Create `backend/.env`:
-
-```env
-MONGO_URI=
-MONGO_URI_TEST=
-PORT=3001
-JWT_SECRET=your-super-secret-jwt-key
+View .env.example in the root of the project.
 ```
 
-Create `frontend/.env`:
-
-```env
-VITE_API_URL=http://localhost:3001
-```
-
-4. **Start development servers**
-
+3. **Start development**
 ```bash
-# Start both frontend and backend
-npm run dev
-
-# Or start individually
-npm run server:dev  # Backend only
-npm run client      # Frontend only
+npm run dev  # Both frontend and backend
 ```
-
-5. **Access the application**
 
 - Frontend: http://localhost:5173
-- Backend API: http://localhost:3001
+- Backend: http://localhost:3001
 
-## 🧪 Testing
+## Features
 
-### Backend Testing
+- ✅ User authentication (login/signup/logout)
+- ✅ Protected routes
+- ✅ Form validation with Zod
+- ✅ Google OAuth integration
+- ✅ JWT token management
+- ✅ Password hashing
+- ✅ CORS configuration
+- ✅ TypeScript throughout
+- ✅ Backend tests with Jest
 
-- **Framework**: Jest with TypeScript support
-- **Coverage**: Routes, models, and utilities
-- **Database**: Uses real MongoDB (with cleanup)
-- **Approach**: Individual test cleanup for safety
-
-- The MONGO_URI_TEST should have created a test user in the db as such: { Name: test, Email: test@test.com, Password: test123 }
+## Testing
 
 ```bash
 cd backend
-npm test                 # Run all tests
-npm run test:watch       # Watch mode
-npm run test:coverage    # With coverage report
+npm test
 ```
 
-### Test Structure
+**Test user required in database:**
+- Email: `test@test.com`
+- Password: `test123`
 
-- **Setup**: Database connection and test data
-- **Execution**: API endpoint testing with supertest
-- **Cleanup**: Individual test data removal
-- **Isolation**: Each test runs independently
-
-## 🎨 Styling
-
-### Tailwind CSS
-
-- **Configuration**: `frontend/tailwind.config.js`
-- **Custom Colors**: Extend theme for brand colors
-- **Components**: Utility-first approach
-- **Responsive**: Mobile-first design
-
-### Custom Colors Example
-
-```javascript
-// tailwind.config.js
-theme: {
-  extend: {
-    colors: {
-      'brand-primary': '#3B82F6',
-      'brand-secondary': '#10B981'
-    }
-  }
-}
-```
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-**MongoDB Connection Error**
+## Commands
 
 ```bash
-# Check if MongoDB is running
-brew services start mongodb-community
-# Or start manually
-mongod
+npm run dev          # Start both servers
+cd backend & npm run dev   # Backend only
+cd frontend & npm run dev  # Frontend only
+cd backend & npm test            # Backend tests
+npm run install-all # Install all dependencies in the root
 ```
 
-**Port Already in Use**
+## Starting a New Project
 
+### 1. **Clone & Setup New Repository**
 ```bash
-# Find and kill process using port 3001
-lsof -ti:3001 | xargs kill -9
+# Clone this boilerplate
+git clone <this-repo-url> your-new-project
+cd your-new-project
+
+# Remove old git history and start fresh
+rm -rf .git
+git init
+
+# Create your new repository on GitHub/GitLab first, then:
+git remote add origin <your-new-repo-url>
 ```
 
-**CORS Errors**
+### 2. **Install & Configure**
+```bash
+# Install all dependencies
+npm run install all
 
-- Check `backend/app.ts` CORS configuration
-- Verify frontend URL matches CORS origin
+# View .env.example and edit the .env files with your settings
+# Start development
+npm run dev
+```
 
-## 🤝 Contributing
+### 4. **First Commit**
+```bash
+git add .
+git commit -m "Initial commit: MERN boilerplate setup"
+git push -u origin main
+```
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Run linting and tests
-6. Submit a pull request
+## Made by
+Albert Hansen @alb9ert
+Mikkel Bruun Larsen @mewkel
