@@ -6,7 +6,7 @@ import { Button } from "../shadcn/button";
 import { Input } from "../shadcn/input";
 import { PasswordInput } from "../shadcn/password-input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../shadcn/form";
-import { GoogleLogin } from "@react-oauth/google";
+import { GoogleLogin, type CredentialResponse } from "@react-oauth/google";
 
 import { useForm } from "react-hook-form";
 import { AxiosError } from "axios";
@@ -57,7 +57,7 @@ const LoginForm = () => {
     });
   }
 
-  const handleGoogleSuccess = async (credentialResponse: any) => {
+  const handleGoogleSuccess = async (credentialResponse: CredentialResponse) => {
     try {
       const { credential } = credentialResponse;
       // send credential (JWT token) to your backend for verification
@@ -105,9 +105,8 @@ const LoginForm = () => {
         <Button className="w-full" type="submit">
           Submit
         </Button>
-
         <div className="w-full">
-          <GoogleLogin onSuccess={handleGoogleSuccess} onError={handleGoogleError}></GoogleLogin>
+          <GoogleLogin onSuccess={handleGoogleSuccess} onError={handleGoogleError} />
         </div>
       </form>
     </Form>
