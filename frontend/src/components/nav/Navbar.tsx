@@ -57,8 +57,8 @@ const Navbar = () => {
           </Link>
         )}
         {user && (
-          <Button variant="secondary" onClick={() => logoutMutation.mutate()}>
-            Logout {user.name}
+          <Button variant="secondary" onClick={() => logoutMutation.mutate()} disabled={logoutMutation.isPending}>
+            {logoutMutation.isPending ? "Logging out..." : `Logout ${user.name}`}
           </Button>
         )}
       </div>
@@ -112,8 +112,9 @@ const Navbar = () => {
                   logoutMutation.mutate();
                   setIsMenuOpen(false);
                 }}
+                disabled={logoutMutation.isPending}
               >
-                Logout {user.name}
+                {logoutMutation.isPending ? "Logging out..." : `Logout ${user.name}`}
               </Button>
             )}
           </div>
