@@ -6,7 +6,8 @@
   "scripts": {
     "start": "tsx app.ts",
     "dev": "nodemon --exec \"tsx app.ts\"",
-    "test": "jest"
+    "test": "jest",
+    "create-test-user": "tsx scripts/createTestUser.ts"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
