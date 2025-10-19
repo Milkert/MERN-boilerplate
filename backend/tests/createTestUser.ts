@@ -1,3 +1,4 @@
+/* eslint-disable */
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import User from "../models/userModel.js";
@@ -18,6 +19,7 @@ const createTestUser = async () => {
     if (existingUser) {
       console.log("Test user already exists");
       await mongoose.connection.close();
+
       return;
     }
 
