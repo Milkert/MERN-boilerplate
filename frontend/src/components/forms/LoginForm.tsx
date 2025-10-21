@@ -102,8 +102,8 @@ const LoginForm = () => {
             </FormItem>
           )}
         />
-        <Button className="w-full" type="submit">
-          Submit
+        <Button className="w-full" type="submit" disabled={mutation.isPending}>
+          {mutation.isPending ? "Logging in..." : "Login"}
         </Button>
         <div className="w-full">
           <GoogleLogin onSuccess={handleGoogleSuccess} onError={handleGoogleError} />

@@ -1,4 +1,4 @@
-function About() {
+const About = () => {
   return (
     <>
       <div className="w-screen h-screen flex justify-center items-center">
@@ -6,6 +6,6 @@ function About() {
       </div>
     </>
   );
-}
+};
 
 export default About;

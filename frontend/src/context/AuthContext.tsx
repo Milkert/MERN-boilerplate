@@ -1,5 +1,6 @@
 import api from "../config/api";
 import { type User } from "../types/userType";
+import Loading from "../components/shared/Loading";
 
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -35,7 +36,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [data, error]);
 
   if (isLoading) {
-    return <div>Loading user...</div>;
+    return <Loading loadingText="Loading User..." />;
   }
 
   return <AuthContext.Provider value={{ user, setUser }}>{children}</AuthContext.Provider>;

@@ -112,4 +112,60 @@ describe("User API", () => {
       });
     });
   });
+
+  describe("Auth Status", () => {
+    it("should return 401 when no token is provided", async () => {
+      const response = await request(app).get("/api/auth-status");
+      expect(response.status).toBe(401);
+    });
+
+    it("should return 401 when invalid token is provided", async () => {
+      const response = await request(app)
+        .get("/api/auth-status")
+        .set("Cookie", "token=invalid-token");
+      expect(response.status).toBe(401);
+    });
+
+    it("should return user data when valid token is provided", async () => {
+      // First login to get a valid token
+      const loginResponse = await request(app).post("/api/login").send({
+        email: emailAlreadyExists.email,
+        password: emailAlreadyExists.password,
+      });
+
+      expect(loginResponse.status).toBe(200);
+      const token = loginResponse.headers["set-cookie"]?.[0]?.split(";")[0]?.split("=")[1];
+
+      // Now test auth-status with the valid token
+      const authStatusResponse = await request(app)
+        .get("/api/auth-status")
+        .set("Cookie", `token=${token}`);
+
+      expect(authStatusResponse.status).toBe(200);
+      expect(authStatusResponse.body.user).toBeDefined();
+      expect(authStatusResponse.body.user.email).toBe(emailAlreadyExists.email);
+      expect(authStatusResponse.body.user.name).toBeDefined();
+      expect(authStatusResponse.body.user.password).toBeUndefined(); // Password should not be returned
+    });
+  });
+
+  describe("Logout", () => {
+    it("should successfully logout and clear cookie", async () => {
+      const response = await request(app).post("/api/logout");
+      expect(response.status).toBe(200);
+      expect(response.body.message).toBe("Logged out successfully");
+    });
+  });
+
+  describe("Name Validation", () => {
+    it("should not signup a user with a name less than 2 characters", async () => {
+      const response = await request(app).post("/api/signup").send({
+        email: "shortname@test.com",
+        password: "test123test",
+        name: "a",
+      });
+      expect(response.status).toBe(400);
+      expect(response.body.nameError).toBe("Name must be between 2 and 15 characters");
+    });
+  });
 });

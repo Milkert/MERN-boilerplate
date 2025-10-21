@@ -135,8 +135,8 @@ const SignupForm = () => {
             </FormItem>
           )}
         />
-        <Button className="w-full" type="submit">
-          Submit
+        <Button className="w-full" type="submit" disabled={mutation.isPending}>
+          {mutation.isPending ? "Signing up..." : "Sign up"}
         </Button>
       </form>
     </Form>
