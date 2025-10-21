@@ -79,7 +79,7 @@ git remote add origin <your-new-repo-url>
 ### 2. **Install & Configure**
 ```bash
 # Install all dependencies
-npm run install all
+npm run install-all
 
 # View .env.example and edit the .env files with your settings
 # Start development
